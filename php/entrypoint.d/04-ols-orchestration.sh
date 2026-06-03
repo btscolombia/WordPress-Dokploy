@@ -16,20 +16,19 @@ EOF
 
 # 1. Global Performance Tuning (Clean up and Force 1 Worker)
 echo "Applying Global Performance Tuning..."
-# Remove any existing workerProcesses lines to avoid duplicates
+# Remove any existing directives to avoid duplicates on container restart
 sed -i '/workerProcesses/d' /usr/local/lsws/conf/httpd_config.conf
-# Insert workerProcesses 1 at the top of the file
+sed -i '/useIpInProxyHeader/d' /usr/local/lsws/conf/httpd_config.conf
+# Insert global directives at the top of the file
 sed -i '1iworkerProcesses 1' /usr/local/lsws/conf/httpd_config.conf
+sed -i '1iuseIpInProxyHeader 1' /usr/local/lsws/conf/httpd_config.conf
 
 # 2. Sync Global PHP Engine Limits
 echo "Syncing global PHP limits to ${PHP_MAX_CONNS:-15}..."
-# This matches the label followed by any amount of space and replaces the number
 sed -i "s/\(maxConns\)[[:space:]]\+[0-9]\+/\1                        ${PHP_MAX_CONNS:-15}/g" /usr/local/lsws/conf/httpd_config.conf
 sed -i "s/PHP_LSAPI_CHILDREN=[0-9]\+/PHP_LSAPI_CHILDREN=${PHP_MAX_CONNS:-15}/g" /usr/local/lsws/conf/httpd_config.conf
 
 echo "Tuning applied successfully."
-
-sed -i '1iuseIpInProxyHeader 1' /usr/local/lsws/conf/httpd_config.conf
 
 # 3. Generate Virtual Host Configuration (vhconf.conf)
 echo "Generating OpenLiteSpeed VHost configuration..."
