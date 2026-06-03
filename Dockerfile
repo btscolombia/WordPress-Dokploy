@@ -1,4 +1,4 @@
-FROM litespeedtech/openlitespeed:1.8.5-lsphp84
+FROM litespeedtech/openlitespeed:1.8.5-lsphp82
 
 # Install dependencies and msmtp
 RUN apt-get update && \
