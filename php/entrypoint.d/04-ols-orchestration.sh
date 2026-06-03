@@ -29,6 +29,8 @@ sed -i "s/PHP_LSAPI_CHILDREN=[0-9]\+/PHP_LSAPI_CHILDREN=${PHP_MAX_CONNS:-15}/g" 
 
 echo "Tuning applied successfully."
 
+sed -i '1iuseIpInProxyHeader 1' /usr/local/lsws/conf/httpd_config.conf
+
 # 3. Generate Virtual Host Configuration (vhconf.conf)
 echo "Generating OpenLiteSpeed VHost configuration..."
 cat <<EOF > /usr/local/lsws/conf/vhosts/localhost/vhconf.conf
@@ -38,8 +40,6 @@ index  {
   indexFiles              index.php, index.html, index.htm
 }
 
-# Real IP Detection from Traefik/Dokploy proxy
-useIpInProxyHeader      1
 accessControl  {
   allow                   *
 }

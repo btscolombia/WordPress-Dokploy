@@ -1,7 +1,7 @@
 #!/bin/bash
 # 02-php-tuning.sh: Dynamic PHP and Opcache configuration
 
-PHP_MODS_DIR="/usr/local/lsws/lsphp84/etc/php/8.4/mods-available"
+PHP_MODS_DIR=$(ls -d /usr/local/lsws/lsphp*/etc/php/*/mods-available 2>/dev/null | head -n 1)
 
 # Ensure Opcache File Cache directory exists and is writable
 mkdir -p /tmp/opcache_file_cache

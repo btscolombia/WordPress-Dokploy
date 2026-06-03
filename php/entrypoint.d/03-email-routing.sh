@@ -1,7 +1,7 @@
 #!/bin/bash
 # 03-email-routing.sh: Native email routing via msmtp
 
-PHP_MODS_DIR="/usr/local/lsws/lsphp84/etc/php/8.4/mods-available"
+PHP_MODS_DIR=$(ls -d /usr/local/lsws/lsphp*/etc/php/*/mods-available 2>/dev/null | head -n 1)
 
 # Generate Mail configuration for native PHP mail()
 echo "Generating mail configuration for msmtp..."
