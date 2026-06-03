@@ -38,19 +38,20 @@ index  {
   indexFiles              index.php, index.html, index.htm
 }
 
-# Real IP Detection
+# Real IP Detection from Traefik/Dokploy proxy
+useIpInProxyHeader      1
 accessControl  {
   allow                   *
 }
 
 # Per-Client Throttling (Brute Force Protection)
 perClientConnLimit  {
-  staticReqLimit          100
-  dynamicReqLimit         5
+  staticReqLimit          10000
+  dynamicReqLimit         10000
   outBandwidth            0
   inBandwidth             0
-  softLimit               1000
-  hardLimit               1500
+  softLimit               10000
+  hardLimit               10000
   gracePeriod             15
   banPeriod               300
 }
