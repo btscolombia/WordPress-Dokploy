@@ -1,5 +1,5 @@
 ARG PHP_VERSION=82
-FROM litespeedtech/openlitespeed:1.8.5-lsphp${PHP_VERSION}
+FROM litespeedtech/openlitespeed:1.9.0-lsphp${PHP_VERSION}
 
 # Install dependencies and msmtp
 RUN apt-get update && \
