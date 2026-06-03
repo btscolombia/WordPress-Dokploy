@@ -1,6 +1,9 @@
 services:
   wordpress:
-    image: ghcr.io/wzul/wordpress-dokploy:latest
+    build:
+      context: .
+      args:
+        PHP_VERSION: ${PHP_VERSION:-82}
     volumes:
       - wp_app:/var/www/html
     init: true
@@ -8,12 +11,12 @@ services:
     restart: unless-stopped
 
   mail-relay:
-    image: ghcr.io/wzul/wordpress-dokploy-mail-relay:latest
+    build: ./mail-relay
     env_file: ".env"
     restart: unless-stopped
 
   mariadb:
-    image: ghcr.io/wzul/wordpress-dokploy-mariadb:latest
+    build: ./mariadb
     env_file: ".env"
     volumes:
       - db_data:/var/lib/mysql
