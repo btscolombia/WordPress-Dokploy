@@ -46,7 +46,7 @@ services:
     restart: unless-stopped
 
   filemanager:
-    image: tinyfilemanager/tinyfilemanager:latest
+    build: ./filemanager
     profiles:
       - tools
     ports:
