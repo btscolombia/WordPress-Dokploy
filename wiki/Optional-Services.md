@@ -11,7 +11,7 @@ When adding a **Domain** or **Port** mapping in the Dokploy UI, use these **Inte
 | **WordPress** | (Always On) | `80` | `localhost:8080` |
 | **OLS Admin** | (Always On) | `7080` | `localhost:7080` |
 | **phpMyAdmin** | `tools` | `80` | `localhost:8081` |
-| **FileBrowser Quantum** | `tools` | `80` | `localhost:8082` |
+| **Filestash** | `tools` | `8334` | `localhost:8082` |
 | **Dozzle** | `debug` | `8080` | `localhost:8083` |
 | **Mailpit** | `mailpit` | `8025` | `localhost:8025` |
 
@@ -41,17 +41,18 @@ When adding a **Domain** or **Port** mapping in the Dokploy UI, use these **Inte
 > - **Use Strong Passwords**: Ensure your `MYSQL_ROOT_PASSWORD` is complex.
 > - **IP Whitelisting**: If possible, restrict access to `phpmyadmin` via your firewall or proxy.
 
-## 📂 Filebrowser
+## 📂 Filestash
 
-**Filebrowser** is a web-based file management tool. It is also configured under the `tools` profile.
+**Filestash** is a modern, web-based file manager with a clean Dropbox-like interface. It is configured under the `tools` profile.
 
 ### How to Enable in Dokploy
 
 1.  Follow the same steps as above for `COMPOSE_PROFILES=tools`.
-2.  **Accessing Filebrowser**:
-    - Add a **Domain** or **Port** to the `filebrowser` service in Dokploy.
+2.  **Accessing Filestash**:
+    - Add a **Domain** or **Port** to the `filestash` service in Dokploy.
+    - The internal container port is **`8334`**.
     - If testing locally, it is available at `http://localhost:8082`.
-    - **Default Login**: `admin` / `admin` (Change immediately!)
+    - **First Login**: Filestash will prompt you to set an admin password on first access.
 
 ### Security Note
 > [!WARNING]

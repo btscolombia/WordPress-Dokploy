@@ -45,18 +45,15 @@ services:
       - mariadb
     restart: unless-stopped
 
-  filebrowser:
-    image: gtstef/filebrowser:stable
+  filestash:
+    image: machines/filestash:latest
     profiles:
       - tools
     ports:
-      - "8082:80"
-    user: "0:0"
-    environment:
-      FILEBROWSER_ADMIN_PASSWORD: ${FILEBROWSER_ADMIN_PASSWORD:-admin}
+      - "8082:8334"
     volumes:
-      - wp_app:/srv
-      - filebrowser_data:/home/filebrowser/data
+      - wp_app:/app/data/files/wp_app
+      - filestash_data:/app/data/state
     restart: unless-stopped
 
   dozzle:
@@ -81,4 +78,4 @@ services:
 volumes:
   wp_app:
   db_data:
-  filebrowser_data:
+  filestash_data:

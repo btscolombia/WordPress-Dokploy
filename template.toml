@@ -3,7 +3,7 @@ main_domain = "${domain}"
 ols_password = "${password:16}"
 db_password = "${password:32}"
 db_root_password = "${password:32}"
-filebrowser_password = "${password:16}"
+filestash_secret = "${password:32}"
 
 [config]
 env = [
@@ -23,7 +23,7 @@ env = [
 
   # Security & Access
   "OLS_PASSWORD=${ols_password}",
-  "FILEBROWSER_ADMIN_PASSWORD=${filebrowser_password}",
+  "FILESTASH_SECRET=${filestash_secret}",
   "INSTALL_WORDPRESS=true",
   "WORDPRESS_DEBUG=false",
 
@@ -84,10 +84,10 @@ serviceName = "phpmyadmin"
 port = 80
 host = "pma.${main_domain}"
 
-# File Browser (Storage Manager)
+# Filestash (Storage Manager)
 [[config.domains]]
-serviceName = "filebrowser"
-port = 80
+serviceName = "filestash"
+port = 8334
 host = "files.${main_domain}"
 
 # Dozzle (Live Logs)

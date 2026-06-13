@@ -1,8 +1,8 @@
-This project includes **FileBrowser Quantum** (a powerful fork by gtsteffaniak) as an optional service. It offers a modern interface, real-time search, and better thumbnail support.
+This project includes **Filestash** as an optional file manager service. It offers a clean, modern interface similar to Dropbox/Google Drive, and mounts the WordPress volume so you can browse and manage your files from the browser.
 
 ## 🛠️ How to Enable in Dokploy
 
-Filebrowser is categorized under the `tools` profile.
+Filestash is categorized under the `tools` profile.
 
 1.  Log in to your **Dokploy** panel.
 2.  Navigate to your **Project -> Environment Variables**.
@@ -11,38 +11,39 @@ Filebrowser is categorized under the `tools` profile.
     COMPOSE_PROFILES=tools
     ```
 4.  **Save** and **Deploy** the project.
-5.  **Accessing Filebrowser**: 
-    - You must add a **Domain** or **Port** to the `filebrowser` service in the Dokploy UI.
+5.  **Accessing Filestash**:
+    - You must add a **Domain** or **Port** to the `filestash` service in the Dokploy UI.
+    - The internal container port is **`8334`**.
     - If testing locally, it is available at `http://localhost:8082`.
 
 ## ⚙️ Key Configuration Details
 
-### 1. Quantum Fork Features
-We use the `gtstef/filebrowser:stable` image, which includes:
-- **Real-time Search**: Search results as you type.
-- **Enhanced Thumbnails**: Better support for videos and office documents.
-- **Multiple Sources**: You can map multiple different volumes/folders in the settings.
+### 1. First-Time Setup
+When you access Filestash for the first time, it will ask you to set an **admin password**. Set a strong password immediately.
 
-### 2. Permissions
-The service is configured with `user: "0:0"` (root) to ensure it has full permission to manage the WordPress files (which are owned by `nobody`).
+### 2. Connecting to WordPress Files
+After logging in, add a storage connection:
+- **Backend**: `Local filesystem`
+- **Path**: `/app/data/files/wp_app`
+
+This gives you full access to your WordPress installation (`/var/www/html`).
 
 ### 3. Data Persistence
-All settings, users, and the database are stored in the `filebrowser_data` volume, which is mounted at `/home/filebrowser/data` inside the container.
+All Filestash settings and state are stored in the `filestash_data` volume, mounted at `/app/data/state` inside the container.
 
 ## 🔐 Security Recommendations
 
 > [!WARNING]
 > Web-based file managers are high-security risks if not protected.
 
-- **Pre-set Password**: You can set a custom login password before deployment by adding `FILEBROWSER_ADMIN_PASSWORD=your_secure_password` to your environment variables.
-- **Immediate Password Change**: If not using the environment variable, the default login is `admin` / `admin`. Change this immediately upon first login.
-- **HTTPS**: Always use a domain with SSL (HTTPS) when accessing Filebrowser.
+- **Set Password on First Login**: Filestash requires you to create a password on first access — do this immediately.
+- **HTTPS**: Always use a domain with SSL (HTTPS) when accessing Filestash.
 - **Disable when not in use**: Set `COMPOSE_PROFILES=` (empty) and redeploy to stop the service when your maintenance task is finished.
 - **IP Restriction**: Use Dokploy's advanced settings or a firewall to restrict access to your specific IP address.
 
 ## 🔄 Zero-Downtime Permission Healing
 
-If you frequently upload files as `root` (via Filebrowser) and want to ensure they are always converted back to the correct WordPress permissions (`nobody`) without restarting your site, you can set up a **Dokploy Scheduler** task:
+If you frequently upload files via Filestash and want to ensure they are always converted back to the correct WordPress permissions (`nobody`) without restarting your site, you can set up a **Dokploy Scheduler** task:
 
 1.  Navigate to the **Scheduler** tab in your project.
 2.  Add a new task:
