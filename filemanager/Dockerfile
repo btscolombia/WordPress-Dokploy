@@ -1,10 +1,14 @@
 FROM php:8.2-apache
 
-# Habilitar mod_rewrite si es necesario
+# Run Apache as 'nobody' to match WordPress file ownership (OpenLiteSpeed uses nobody:nogroup)
+ENV APACHE_RUN_USER=nobody
+ENV APACHE_RUN_GROUP=nogroup
+
+# Enable mod_rewrite
 RUN a2enmod rewrite
 
-# Descargar la última versión oficial de Tiny File Manager y guardarla como index.php
+# Download the latest official Tiny File Manager
 RUN curl -o /var/www/html/index.php https://raw.githubusercontent.com/prasathmani/tinyfilemanager/master/tinyfilemanager.php
 
-# Dar permisos correctos (opcional pero recomendado)
-RUN chown -R www-data:www-data /var/www/html
+# Fix ownership of Tiny File Manager's own files
+RUN chown -R nobody:nogroup /var/www/html
