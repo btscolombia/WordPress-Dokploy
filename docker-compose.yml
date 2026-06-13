@@ -51,9 +51,9 @@ services:
     environment:
       TFM_USERNAME: ${FILEMANAGER_USER:-admin}
       TFM_PASSWORD: ${FILEMANAGER_PASSWORD:-admin123}
-      TFM_ROOT: /var/www/html
+      TFM_ROOT: /var/www/html/wp
     volumes:
-      - wp_app:/var/www/html
+      - wp_app:/var/www/html/wp
     restart: unless-stopped
 
   dozzle:
