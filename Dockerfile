@@ -34,7 +34,7 @@ ENV DISABLE_WP_CRON=true
 # (Removed OLS_PASSWORD default for security - set via ENV at runtime)
 
 # Custom entrypoint for dynamic configuration injection
-COPY php/docker-entrypoint-extra.sh php/htaccess-watcher.sh php/lscache-mu.php /usr/local/bin/
+COPY php/docker-entrypoint-extra.sh php/htaccess-watcher.sh php/lscache-mu.php php/nonce-cache-guard-mu.php /usr/local/bin/
 COPY php/entrypoint.d/ /usr/local/bin/entrypoint.d/
 RUN chmod +x /usr/local/bin/docker-entrypoint-extra.sh /usr/local/bin/htaccess-watcher.sh /usr/local/bin/entrypoint.d/*.sh
 
