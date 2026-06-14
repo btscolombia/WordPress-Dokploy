@@ -36,6 +36,6 @@ if ( defined('LITESPEED_CONF') && LITESPEED_CONF ) {
     }
 }
 
-if (defined('WP_PLUGIN_DIR') && file_exists(WP_PLUGIN_DIR . '/litespeed-cache/litespeed-cache.php')) {
-    require_once WP_PLUGIN_DIR . '/litespeed-cache/litespeed-cache.php';
-}
+// The require_once for litespeed-cache has been removed.
+// LiteSpeed Cache is no longer forced as a Must-Use plugin.
+// You can now activate or deactivate it normally from the WordPress Plugins screen.
