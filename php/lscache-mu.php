@@ -2,29 +2,21 @@
 /*
 Plugin Name: LiteSpeed Cache (MU)
 Description: LiteSpeed Cache forced as a Must-Use plugin and auto-configured for Valkey.
-Version: 1.2
+Version: 1.1
 Author: Dokploy Integration
 */
 
 /**
  * Auto-configure LiteSpeed Cache for Valkey (Redis)
  * These constants override any settings in the database.
- *
- * IMPORTANT: Object cache (Valkey) is DISABLED by default.
- * Enabling it causes Elementor "Access Denied" on second save because
- * WordPress nonces get cached in Valkey and become stale between requests.
- *
- * To enable object cache (for high-traffic sites only), set in your .env:
- *   LITESPEED_CACHE_OBJECT_ENABLE=true
  */
 if ( ! defined( 'LITESPEED_CONF' ) ) {
     define( 'LITESPEED_CONF', getenv('LITESPEED_CACHE_OBJECT_CONF') !== 'false' );
 }
 
 if ( defined('LITESPEED_CONF') && LITESPEED_CONF ) {
-    // Object cache is OPT-IN: must explicitly set LITESPEED_CACHE_OBJECT_ENABLE=true
     if ( ! defined( 'LITESPEED_CONF__OBJECT' ) ) {
-        define( 'LITESPEED_CONF__OBJECT', getenv('LITESPEED_CACHE_OBJECT_ENABLE') === 'true' );
+        define( 'LITESPEED_CONF__OBJECT', getenv('LITESPEED_CACHE_OBJECT_ENABLE') !== 'false' );
     }
     if ( ! defined( 'LITESPEED_CONF__OBJECT__KIND' ) ) {
         define( 'LITESPEED_CONF__OBJECT__KIND', (int)(getenv('LITESPEED_CACHE_OBJECT_KIND') ?: 1) ); // 1 = Redis

@@ -38,9 +38,5 @@ if [ "$INSTALL_WORDPRESS" = "true" ]; then
     echo "Deploying LiteSpeed Cache MU loader..."
     cp /usr/local/bin/lscache-mu.php "$MU_PLUGINS/lscache-mu.php"
 
-    # Copy the Nonce Cache Guard to prevent Elementor 'Access Denied' on second save
-    echo "Deploying Nonce Cache Guard MU plugin..."
-    cp /usr/local/bin/nonce-cache-guard-mu.php "$MU_PLUGINS/nonce-cache-guard-mu.php"
-
     chown -R nobody:nogroup "$WP_CONTENT"
 fi
