@@ -35,14 +35,18 @@ if (isset(\$_SERVER['HTTP_CF_CONNECTING_IP'])) {\\
 
         if ! grep -q "HTTP_X_FORWARDED_PROTO" "$WP_CONFIG"; then
             echo "Injecting HTTPS reverse proxy handling for Dokploy into wp-config.php..."
-            sed -i "/<?php/a \\
-/**\\
- * Fix HTTPS detection behind Cloudflare/Dokploy reverse proxy\\
- */\\
+            sed -i "/require_once ABSPATH . 'wp-settings.php';/i \\
+\\
+// Cloudflare / Dokploy Proxy Fix\\
 if (isset(\$_SERVER['HTTP_X_FORWARDED_PROTO']) && \$_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {\\
     \$_SERVER['HTTPS'] = 'on';\\
 }\\
-define('FORCE_SSL_ADMIN', true);" "$WP_CONFIG"
+define('FORCE_SSL_ADMIN', true);\\
+if (isset(\$_SERVER['HTTP_HOST'])) {\\
+    define('WP_HOME', 'https://' . \$_SERVER['HTTP_HOST']);\\
+    define('WP_SITEURL', 'https://' . \$_SERVER['HTTP_HOST']);\\
+}\\
+" "$WP_CONFIG"
         fi
 
         # 1.2 Handle WordPress Cron
