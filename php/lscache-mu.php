@@ -29,6 +29,7 @@ if ( defined('LITESPEED_CONF') && LITESPEED_CONF ) {
     }
 }
 
-if (defined('WP_PLUGIN_DIR') && file_exists(WP_PLUGIN_DIR . '/litespeed-cache/litespeed-cache.php')) {
-    require_once WP_PLUGIN_DIR . '/litespeed-cache/litespeed-cache.php';
-}
+// The require_once for litespeed-cache has been removed.
+// The constants above will still auto-configure Valkey for you,
+// but you must now install and activate LiteSpeed Cache manually from the Plugins screen.
+// This allows you to update the plugin normally and have full control.
